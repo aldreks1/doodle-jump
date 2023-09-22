@@ -11,9 +11,10 @@ let isMovingLeft = false;
 let isMovingRight = false;
 let isJumping = false;
 let gravity = 0.45;
-const startBtn = document.querySelector(".startBtn")
+let score = 0;
+const startBtn = document.querySelector(".startBtn");
 let speed = 15;
-startBtn.addEventListener("click",startGame)
+startBtn.addEventListener("click", startGame);
 function createDoodler() {
   field.appendChild(doodler);
   doodler.classList.add("doodler");
@@ -46,23 +47,22 @@ function createPlatforms() {
 }
 
 function movePlatforms() {
-  if (doodlerBottom  > 200) {
-      platforms.forEach(platform => {
-        platform.bottom -= 4
-        let visual = platform.visual
-        visual.style.bottom = platform.bottom + 'px'
+  if (doodlerBottom > 200) {
+    platforms.forEach((platform) => {
+      platform.bottom -= 4;
+      let visual = platform.visual;
+      visual.style.bottom = platform.bottom + "px";
 
-        if(platform.bottom < 0) {
-          let firstPlatform = platforms[0].visual
-          firstPlatform.classList.remove('platform')
-          platforms.shift()
-          // score++
-          var newPlatform = new Platform(600)
-          platforms.push(newPlatform)
-        }
-    }) 
+      if (platform.bottom < 0) {
+        let firstPlatform = platforms[0].visual;
+        firstPlatform.classList.remove("platform");
+        platforms.shift();
+        score++;
+        var newPlatform = new Platform(600);
+        platforms.push(newPlatform);
+      }
+    });
   }
-  
 }
 
 function jump() {
@@ -93,7 +93,7 @@ function fall() {
       if (parseFloat(doodler.style.bottom) <= 0) {
         doodler.style.bottom = "0px";
         gravity = 0.45;
-        console.log("game over");
+        gameOver(score);
         clearInterval(fallInterval);
         clearInterval(leftInterval);
         clearInterval(rightInterval);
@@ -152,13 +152,21 @@ document.addEventListener("keyup", (e) => {
 });
 // add a button later
 function startGame() {
-  while(field.firstChild){
-  field.removeChild(field.firstChild)
-}
-  console.log("стартуем")
+  while (field.firstChild) {
+    field.removeChild(field.firstChild);
+  }
+  console.log("стартуем");
   createPlatforms();
   createDoodler();
-  setInterval(movePlatforms,15)
+  setInterval(movePlatforms, 15);
   requestAnimationFrame(moveDoodler);
   jump();
+}
+
+function gameOver(score) {
+  while (field.firstChild) {
+    field.removeChild(field.firstChild);
+  }
+let html = `<div class="finalScore">${score}</div>`;
+field.innerHTML = html;
 }
