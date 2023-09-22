@@ -1,0 +1,39 @@
+.field {
+  width: 400px;
+  height: 600px;
+  background-image: url("img/background.png");
+  position: relative;
+  font-size: 100px;
+  text-align: center;
+  margin: auto;
+}
+
+.doodler {
+  width: 87px;
+  height: 85px;
+  background-image: url("img/doodler-guy.png");
+  position: absolute;
+}
+
+.platform {
+  width: 85px;
+  height: 15px;
+  background-image: url("img/platform.png");
+  position: absolute;
+}
+
+
+body{
+    background-color: #1f1f1f;
+}
+
+.startBtn{
+  background: url(img/startbtn.png) no-repeat;
+  cursor: pointer;
+  width: 96px;
+  height: 96px;
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
