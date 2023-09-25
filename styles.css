@@ -55,3 +55,12 @@ body{
   top: 1px;
   right: 6px;
 }
+
+.record{
+  font-size: 20px;
+  position: absolute;
+  bottom: 34%;
+  left: 50%;
+  transform: translate(-50%, 50%);
+  font-family: 'Cookie', cursive;
+}

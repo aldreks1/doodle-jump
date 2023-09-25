@@ -155,7 +155,7 @@ function gameOver(score) {
   while (field.firstChild) {
     field.removeChild(field.firstChild);
   }
-  let html = `<div class = "restartBtn"></div><div class="finalScore">${score}</div>`;
+  let html = `<div class = "restartBtn"></div><div class="finalScore">${score}</div><div class = "record">Ваш Рекорд: ${localStorageUtil.putRecord(score)}</div>`;
   field.innerHTML = html;
 
   const restartBtn = document.querySelector(".restartBtn");
