@@ -45,3 +45,13 @@ body{
   transform: translate(-50%, 50%);
   font-family: 'Cookie', cursive;
 }
+
+.restartBtn{
+  background: url(img/restart.png) no-repeat;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  position: absolute;
+  top: 1px;
+  right: 6px;
+}

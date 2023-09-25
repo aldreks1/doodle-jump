@@ -14,6 +14,9 @@ let gravity = 0.45;
 let score = 0;
 const startBtn = document.querySelector(".startBtn");
 let speed = 15;
+let movePlatformsInterval;
+let animationFrameId;
+const restartBtn = document.createElement("div");
 startBtn.addEventListener("click", startGame);
 function createDoodler() {
   field.appendChild(doodler);
@@ -116,7 +119,8 @@ function fall() {
     });
   }, 10);
 }
-
+document.addEventListener("keydown", handleKeyDown);
+document.addEventListener("keyup", handleKeyUp);
 function moveDoodler() {
   if (isMovingLeft) {
     if (doodlerLeft > 0) {
@@ -132,25 +136,9 @@ function moveDoodler() {
     }
   }
 
-  requestAnimationFrame(moveDoodler);
+  animationFrameId = requestAnimationFrame(moveDoodler);
 }
 
-document.addEventListener("keydown", (e) => {
-  if (e.key === "ArrowLeft") {
-    isMovingLeft = true;
-  } else if (e.key === "ArrowRight") {
-    isMovingRight = true;
-  }
-});
-
-document.addEventListener("keyup", (e) => {
-  if (e.key === "ArrowLeft") {
-    isMovingLeft = false;
-  } else if (e.key === "ArrowRight") {
-    isMovingRight = false;
-  }
-});
-// add a button later
 function startGame() {
   while (field.firstChild) {
     field.removeChild(field.firstChild);
@@ -158,8 +146,8 @@ function startGame() {
   console.log("стартуем");
   createPlatforms();
   createDoodler();
-  setInterval(movePlatforms, 15);
-  requestAnimationFrame(moveDoodler);
+  movePlatformsInterval = setInterval(movePlatforms, 15);
+  moveDoodler();
   jump();
 }
 
@@ -167,6 +155,37 @@ function gameOver(score) {
   while (field.firstChild) {
     field.removeChild(field.firstChild);
   }
-let html = `<div class="finalScore">${score}</div>`;
-field.innerHTML = html;
+  let html = `<div class = "restartBtn"></div><div class="finalScore">${score}</div>`;
+  field.innerHTML = html;
+
+  const restartBtn = document.querySelector(".restartBtn");
+  restartBtn.addEventListener("click", restartGame);
+}
+
+function restartGame() {
+  removeEventListeners();
+  startGame();
+}
+
+function removeEventListeners() {
+  cancelAnimationFrame(animationFrameId)
+  platforms = [];
+  score = 0;
+  clearInterval(movePlatformsInterval);
+}
+
+function handleKeyDown(e) {
+  if (e.key === "ArrowLeft") {
+    isMovingLeft = true;
+  } else if (e.key === "ArrowRight") {
+    isMovingRight = true;
+  }
+}
+
+function handleKeyUp(e) {
+  if (e.key === "ArrowLeft") {
+    isMovingLeft = false;
+  } else if (e.key === "ArrowRight") {
+    isMovingRight = false;
+  }
 }
